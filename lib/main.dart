@@ -13,11 +13,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Իմ գրքերը',
+
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: const Color.fromARGB(255, 204, 195, 221),
-        scaffoldBackgroundColor: const Color.fromARGB(255, 113, 144, 225),
+        colorSchemeSeed: Colors.deepPurple,
+        scaffoldBackgroundColor: const Color(0xFFF5F1FA),
       ),
+
       home: const BooksScreen(),
     );
   }

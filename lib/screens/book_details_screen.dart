@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/book.dart';
+import '../widgets/star_rating.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   final Book book;
@@ -35,18 +36,14 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
           children: [
             const SizedBox(height: 30),
 
-            const Icon(
-              Icons.menu_book,
-              size: 100,
-              color: Color.fromARGB(255, 182, 156, 226),
-            ),
+            const Icon(Icons.menu_book, size: 100, color: Colors.deepPurple),
 
             const SizedBox(height: 20),
 
             Text(
               book.title,
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 10),
@@ -55,7 +52,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
 
             const SizedBox(height: 15),
 
-            Chip(label: Text(book.genre.title)),
+            Chip(label: Text(book.genre.label)),
 
             const SizedBox(height: 50),
 
@@ -66,24 +63,14 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
 
             const SizedBox(height: 15),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-
-              children: List.generate(5, (index) {
-                return IconButton(
-                  onPressed: () {
-                    setState(() {
-                      rating = index + 1;
-                    });
-                  },
-
-                  icon: Icon(
-                    index < rating ? Icons.star : Icons.star_border,
-                    color: Colors.amber,
-                    size: 38,
-                  ),
-                );
-              }),
+            StarRating(
+              rating: rating,
+              size: 38,
+              onChanged: (value) {
+                setState(() {
+                  rating = value;
+                });
+              },
             ),
 
             const SizedBox(height: 30),

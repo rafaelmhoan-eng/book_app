@@ -1,6 +1,6 @@
 import '../models/book.dart';
 
-final List<Book> initialBooks = [
+const List<Book> initialBooks = [
   Book(
     id: 1,
     title: 'Harry Potter',

@@ -1,7 +1,7 @@
 enum BookGenre { novel, history, fantasy, poetry }
 
 extension BookGenreExtension on BookGenre {
-  String get title {
+  String get label {
     switch (this) {
       case BookGenre.novel:
         return 'Վեպ';
@@ -23,7 +23,7 @@ class Book {
   final bool isRead;
   final int? rating;
 
-  Book({
+  const Book({
     required this.id,
     required this.title,
     required this.author,

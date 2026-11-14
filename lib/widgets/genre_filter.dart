@@ -3,7 +3,7 @@ import '../models/book.dart';
 
 class GenreFilter extends StatelessWidget {
   final BookGenre? selectedGenre;
-  final Function(BookGenre?) onSelected;
+  final ValueChanged<BookGenre?> onSelected;
 
   const GenreFilter({
     super.key,
@@ -23,11 +23,12 @@ class GenreFilter extends StatelessWidget {
             selected: selectedGenre == null,
             onSelected: (_) => onSelected(null),
           ),
+
           ...BookGenre.values.map((genre) {
             return Padding(
               padding: const EdgeInsets.only(left: 8),
               child: ChoiceChip(
-                label: Text(genre.title),
+                label: Text(genre.label),
                 selected: selectedGenre == genre,
                 onSelected: (_) => onSelected(genre),
               ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/book.dart';
+import 'star_rating.dart';
 
 class BookTile extends StatelessWidget {
   final Book book;
-  final Function(bool?) onChanged;
+  final ValueChanged<bool?> onChanged;
   final VoidCallback onTap;
 
   const BookTile({
@@ -17,10 +18,17 @@ class BookTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+
       child: ListTile(
         onTap: onTap,
 
-        leading: Checkbox(value: book.isRead, onChanged: onChanged),
+        leading: Checkbox(
+          value: book.isRead,
+          onChanged: onChanged,
+          activeColor: Colors.deepPurple,
+        ),
 
         title: Text(
           book.title,
@@ -36,22 +44,18 @@ class BookTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(book.author),
+
             const SizedBox(height: 5),
+
             Text(
-              book.genre.title,
+              book.genre.label,
               style: const TextStyle(color: Colors.deepPurple, fontSize: 12),
             ),
           ],
         ),
 
         trailing: book.rating != null
-            ? Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.star, color: Colors.amber),
-                  Text('${book.rating}.0'),
-                ],
-              )
+            ? StarRating(rating: book.rating!, size: 16)
             : const Icon(Icons.arrow_forward_ios, size: 16),
       ),
     );

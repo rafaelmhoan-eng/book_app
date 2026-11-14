@@ -41,10 +41,12 @@ class _BooksScreenState extends State<BooksScreen> {
 
   // Checkbox
   void toggleRead(Book book, bool? value) {
-    setState(() {
-      final index = books.indexWhere((item) => item.id == book.id);
+    final index = books.indexWhere((item) => item.id == book.id);
 
-      books[index] = book.copyWith(isRead: value ?? false);
+    if (index == -1) return;
+
+    setState(() {
+      books[index] = books[index].copyWith(isRead: value ?? false);
     });
   }
 
@@ -59,6 +61,8 @@ class _BooksScreenState extends State<BooksScreen> {
       ),
     );
 
+    if (!mounted) return;
+
     if (result != null) {
       setState(() {
         final index = books.indexWhere((item) => item.id == book.id);
@@ -70,12 +74,14 @@ class _BooksScreenState extends State<BooksScreen> {
     }
   }
 
-  // Գիրքը ջնջել և վերականգնել
+  // Ջնջել գիրքը
   void deleteBook(Book book) {
     final index = books.indexOf(book);
 
+    if (index == -1) return;
+
     setState(() {
-      books.remove(book);
+      books.removeAt(index);
     });
 
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -89,7 +95,9 @@ class _BooksScreenState extends State<BooksScreen> {
 
           onPressed: () {
             setState(() {
-              books.insert(index, book);
+              final restoreIndex = index > books.length ? books.length : index;
+
+              books.insert(restoreIndex, book);
             });
           },
         ),
@@ -117,6 +125,7 @@ class _BooksScreenState extends State<BooksScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
+
             child: Center(
               child: Text(
                 'Կարդացված՝ $readCount',
@@ -154,7 +163,7 @@ class _BooksScreenState extends State<BooksScreen> {
                 ),
 
                 filled: true,
-                fillColor: const Color.fromARGB(255, 254, 253, 253),
+                fillColor: Colors.white,
 
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -193,6 +202,7 @@ class _BooksScreenState extends State<BooksScreen> {
                 ? const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+
                       children: [
                         Icon(Icons.menu_book, size: 65, color: Colors.grey),
 
